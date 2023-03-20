@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>LoginWindow.js</file>
+        <file>LoginA.qml</file>
+        <file>PageOneA.qml</file>
+        <file>PageTwoA.qml</file>
+    </qresource>
+</RCC>
