@@ -10,35 +10,64 @@ Window {
     visible: true
     title: qsTr("dynamic")
     id: parentWindow
+    Component.onCompleted: {
+        loader.sourceComponent = pageOneRectangle;
+        Js.createSpriteObjectLogin(parentWindow);
+    }
+    function pageChange() {
+        if (loader.sourceComponent === pageOneRectangle)
+        {
+            loader.sourceComponent = pageTwoRectangle
+            pages.text = "Первая страница"
+        } else {
+            loader.sourceComponent = pageOneRectangle
+            pages.text = "Вторая страница"
+        }
+    }
+    Component {
+        id: pageOneRectangle
+        Rectangle {
+            width: parentWindow.width
+            height: parentWindow.height - 30
+            color: "red"
+            Component.onCompleted:print("First page window loaded")
+            Component.onDestruction:print("First page window destroyed")
 
-    Rectangle {
-        anchors.fill: parent
-
-        Button {
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.verticalCenter: parent.verticalCenter
-            text: qsTr("Логин")
-            onClicked: { Js.createSpriteObjectLogin(parentWindow);
+            Text {
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
+                text: "Первая страница"
+                color: "white"
             }
         }
     }
-    // я зашел в тупик. если я создаю объекты так, то неполучается динамической загрузки
-    // но проходят сигналы, а если так не делать, то никак не пойму как сигнал сюда послать
-    // Можно сделать кнопок конечно и возвращаться на начальный экран при удалении объекта
-    // но главная проблема в форме с логином и паролем. Ни как не соображу как подгрузить
-    // следующую страницу при верной идентификации. Если я загружаю объект из самой формы,
-    // то объект сразу удаляется при удалении формы.
-//        LoginA {
-//            onLogedInSignal: { Js.createSpriteObjectPageOne(parentWindow);
-//            }
-//        }
-//        PageOneA {
-//            onNextPageSignal: { Js.createSpriteObjectPageTwo(parentWindow);
-//            }
-//        }
-//        PageTwoA {
-//            onPrevPageSignal: { Js.createSpriteObjectPageOne(parentWindow);
-//            }
-//        }
+    Component {
+        id: pageTwoRectangle
+        Rectangle {
+            width: parentWindow.width
+            height: parentWindow.height - 30
+            color: "blue"
+            Component.onCompleted:print("Second page window loaded")
+            Component.onDestruction:print("Second page window destroyed")
 
+            Text {
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
+                color: "white"
+                text: "Вторая страница"
+            }
+        }
+    }
+    Loader {
+        id: loader
+    }
+    Button {
+        id: pages
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
+        text: qsTr("Вторая страница")
+        onClicked: {
+            pageChange()
+        }
+    }
 }
