@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.15
+import "LoginWindow.js" as Js
 
 Rectangle {
     id: loginRectangle
@@ -13,10 +14,11 @@ Rectangle {
     signal logedInSignal()
 
     Component.onCompleted: print("Login window loaded")
-    Component.onDestruction:print("Login window destroyed")
+    Component.onDestruction: print("Login window destroyed")
 
     function loginIsCorect() {
         if(name.text == "login" && password.text == "password"){
+            // Js.createSpriteObjectPageOne(parent);   // так загружается но не работает (сразу удаляется)
             loginRectangle.logedInSignal()
             this.destroy()
         } else {

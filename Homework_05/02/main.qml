@@ -21,18 +21,24 @@ Window {
             onClicked: { Js.createSpriteObjectLogin(parentWindow);
             }
         }
-}
-        LoginA {
-            onLogedInSignal: { Js.createSpriteObjectPageOne(parentWindow);
-            }
-        }
-        PageOneA {
-            onNextPageSignal: { Js.createSpriteObjectPageTwo(parentWindow);
-            }
-        }
-        PageTwoA {
-            onPrevPageSignal: { Js.createSpriteObjectPageOne(parentWindow);
-            }
-        }
+    }
+    // я зашел в тупик. если я создаю объекты так, то неполучается динамической загрузки
+    // но проходят сигналы, а если так не делать, то никак не пойму как сигнал сюда послать
+    // Можно сделать кнопок конечно и возвращаться на начальный экран при удалении объекта
+    // но главная проблема в форме с логином и паролем. Ни как не соображу как подгрузить
+    // следующую страницу при верной идентификации. Если я загружаю объект из самой формы,
+    // то объект сразу удаляется при удалении формы.
+//        LoginA {
+//            onLogedInSignal: { Js.createSpriteObjectPageOne(parentWindow);
+//            }
+//        }
+//        PageOneA {
+//            onNextPageSignal: { Js.createSpriteObjectPageTwo(parentWindow);
+//            }
+//        }
+//        PageTwoA {
+//            onPrevPageSignal: { Js.createSpriteObjectPageOne(parentWindow);
+//            }
+//        }
 
 }
